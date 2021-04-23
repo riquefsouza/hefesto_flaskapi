@@ -1,6 +1,6 @@
-python3 -m venv flaskapi-env
-
-. flaskapi-env/bin/activate
+python3 -m venv venv
+. venv/bin/activate
+pip install -U pip setuptools
 
 env | grep VIRTUAL_ENV
 
@@ -21,4 +21,5 @@ git add .
 git commit -m "hefesto_flaskapi first commit"
 git push
 
-
+pip install SQLAlchemy
+pip install flask-sqlalchemy

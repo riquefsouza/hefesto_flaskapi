@@ -18,8 +18,11 @@ def findAll():
 @app.route(URL + '/<id>', methods=["GET"])
 def findById(id: int):
     admUser = service.findById(id)
-    dto = AdmUserDTO(admUser)
-    return dto.to_json(), 200
+    if admUser!=None:
+        dto = AdmUserDTO(admUser)
+        return dto.to_json(), 200
+    else:
+        return "", 404
 
 @app.route(URL, methods=["POST"])
 def save():
@@ -27,23 +30,30 @@ def save():
     #email = request.form.get('email')
     body = request.json
     form: AdmUserForm = AdmUserForm(body)
-    newAdmUser = service.save(form)
-    return {
-        "admUser_id": newAdmUser.id
-    }
+    admUser = service.save(form)
+    if admUser!=None:
+        dto = AdmUserDTO(admUser)
+        return dto.to_json(), 201
+    else:
+        return "", 404
 
 @app.route(URL + '/<id>', methods=["PUT"])
 def update(id: int):
     body = request.json
     form: AdmUserForm = AdmUserForm(body)
-
     admUser = service.update(id, form)
-    dto = AdmUserDTO(admUser)
-    return dto.to_json()
+    if admUser!=None:
+        dto = AdmUserDTO(admUser)
+        return dto.to_json(), 200
+    else:
+        return "", 404
 
 @app.route(URL + '/<id>', methods=["DELETE"])
 def delete(id: int):
     bOk: bool = service.delete(id)
-    return {"success": bOk}
+    if bOk:
+        return "", 200
+    else:
+        return "", 404
 
 

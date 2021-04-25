@@ -23,3 +23,5 @@ git push
 
 pip install SQLAlchemy
 pip install flask-sqlalchemy
+
+pip install -r requirements.txt

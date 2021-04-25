@@ -1,0 +1,29 @@
+{
+    "sqltools.connections": [
+        {
+            "mysqlOptions": {
+                "authProtocol": "default"
+            },
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 3306,
+            "driver": "MySQL",
+            "name": "dbhefesto",
+            "group": "dbhefesto",
+            "database": "dbhefesto",
+            "username": "root",
+            "password": "abcd1234"
+        },
+        {
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 5432,
+            "driver": "PostgreSQL",
+            "name": "dbhefesto",
+            "group": "dbhesfesto",
+            "database": "dbhefesto",
+            "username": "postgres",
+            "password": "abcd1234"
+        }
+    ]
+}

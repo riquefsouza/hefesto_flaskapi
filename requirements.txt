@@ -1,0 +1,15 @@
+aniso8601
+click
+Flask
+Flask-RESTful
+Flask-SQLAlchemy
+psycopg2-binary
+jsonify
+itsdangerous
+Jinja2
+MarkupSafe
+pytz
+six
+SQLAlchemy
+Werkzeug
+requests

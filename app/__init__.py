@@ -1,5 +1,6 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask_marshmallow import Marshmallow
 #from flask_script import Manager
 #from flask_migrate import Migrate, MigrateCommand
 
@@ -16,13 +17,10 @@ app.config.from_object('config')
 
 
 db = SQLAlchemy(app)
+ma = Marshmallow(app)
 #migrate = Migrate(app, db)
 
 #manager = Manager(app)
 #manager.add_command('db', MigrateCommand)
 
-from app.admin.models.AdmUser import AdmUser
-from app.admin.schemas.AdmUserDTO import AdmUserDTO
-from app.admin.schemas.AdmUserForm import AdmUserForm
-from app.admin.services.AdmUserService import AdmUserService
 from app.admin.controllers import AdmUserController

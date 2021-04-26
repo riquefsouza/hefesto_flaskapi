@@ -1,26 +1,30 @@
 from app import app
 from app.admin.models.AdmUser import AdmUser
+from app.admin.schemas.AdmUserSchema import adm_user_schema, adm_users_schema
 from app.admin.schemas.AdmUserDTO import AdmUserDTO
 from app.admin.schemas.AdmUserForm import AdmUserForm
 from app.admin.services.AdmUserService import AdmUserService
-from flask import request
+from flask import request, jsonify
 
 service = AdmUserService()
 
-URL = '/api/v1/admUser'
+URL = app.config['API_ROOT'] + '/admUser'
 
 @app.route(URL, methods=["GET"])
 def findAll():
     listaUsers = service.findAll()
-    listaDTO = AdmUserDTO.list_to_json(listaUsers);
-    return listaDTO, 200
+    #listaDTO = AdmUserDTO.list_to_json(listaUsers)
+    listaDTO = adm_users_schema.dump(listaUsers)
+    #return listaDTO, 200
+    return jsonify(listaDTO), 200
 
 @app.route(URL + '/<id>', methods=["GET"])
 def findById(id: int):
     admUser = service.findById(id)
     if admUser!=None:
-        dto = AdmUserDTO(admUser)
-        return dto.to_json(), 200
+        #dto = AdmUserDTO(admUser)
+        #return dto.to_json(), 200
+        return adm_user_schema.jsonify(admUser), 200
     else:
         return "", 404
 
@@ -32,8 +36,9 @@ def save():
     form: AdmUserForm = AdmUserForm(body)
     admUser = service.save(form)
     if admUser!=None:
-        dto = AdmUserDTO(admUser)
-        return dto.to_json(), 201
+        #dto = AdmUserDTO(admUser)
+        #return dto.to_json(), 201
+        return adm_user_schema.jsonify(admUser), 201
     else:
         return "", 404
 
@@ -43,8 +48,9 @@ def update(id: int):
     form: AdmUserForm = AdmUserForm(body)
     admUser = service.update(id, form)
     if admUser!=None:
-        dto = AdmUserDTO(admUser)
-        return dto.to_json(), 200
+        #dto = AdmUserDTO(admUser)
+        #return dto.to_json(), 200
+        return adm_user_schema.jsonify(admUser), 200
     else:
         return "", 404
 

@@ -8,7 +8,7 @@ class AdmParameterCategoryForm:
 
     def __init__(self, admParameterCategory: Dict):
         self.description = admParameterCategory["description"]
-        self.order = admParameterCategory["order"]"
+        self.order = admParameterCategory["order"]
 
     def to_AdmParameterCategory(self):
         newAdmParameterCategory = AdmParameterCategory(

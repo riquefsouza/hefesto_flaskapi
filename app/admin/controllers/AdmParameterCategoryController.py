@@ -1,50 +1,50 @@
 from app import app
-from app.admin.models.AdmParemeterCategory import AdmParemeterCategory
-from app.admin.schemas.AdmParemeterCategorySchema import admParemeterCategory_schema, admParemeterCategory_schemaMany
-from app.admin.schemas.AdmParemeterCategoryForm import AdmParemeterCategoryForm
-from app.admin.services.AdmParemeterCategoryService import AdmParemeterCategoryService
+from app.admin.models.AdmParameterCategory import AdmParameterCategory
+from app.admin.schemas.AdmParameterCategorySchema import admParameterCategory_schema, admParameterCategory_schemaMany
+from app.admin.schemas.AdmParameterCategoryForm import AdmParameterCategoryForm
+from app.admin.services.AdmParameterCategoryService import AdmParameterCategoryService
 from flask import request, jsonify
 
-service = AdmParemeterCategoryService()
+service = AdmParameterCategoryService()
 
-URL = app.config['API_ROOT'] + '/admParemeterCategory'
+URL = app.config['API_ROOT'] + '/admParameterCategory'
 
 @app.route(URL, methods=["GET"])
-def admParemeterCategory_findAll():
-    listaParemeterCategorys = service.findAll()
-    listaDTO = admParemeterCategory_schemaMany.dump(listaParemeterCategorys)
+def admParameterCategory_findAll():
+    listaParameterCategorys = service.findAll()
+    listaDTO = admParameterCategory_schemaMany.dump(listaParameterCategorys)
     return jsonify(listaDTO), 200
 
 @app.route(URL + '/<id>', methods=["GET"])
-def admParemeterCategory_findById(id: int):
-    admParemeterCategory = service.findById(id)
-    if admParemeterCategory!=None:
-        return admParemeterCategory_schema.jsonify(admParemeterCategory), 200
+def admParameterCategory_findById(id: int):
+    admParameterCategory = service.findById(id)
+    if admParameterCategory!=None:
+        return admParameterCategory_schema.jsonify(admParameterCategory), 200
     else:
         return "", 404
 
 @app.route(URL, methods=["POST"])
-def admParemeterCategory_save():
+def admParameterCategory_save():
     body = request.json
-    form: AdmParemeterCategoryForm = AdmParemeterCategoryForm(body)
-    admParemeterCategory = service.save(form)
-    if admParemeterCategory!=None:
-        return admParemeterCategory_schema.jsonify(admParemeterCategory), 201
+    form: AdmParameterCategoryForm = AdmParameterCategoryForm(body)
+    admParameterCategory = service.save(form)
+    if admParameterCategory!=None:
+        return admParameterCategory_schema.jsonify(admParameterCategory), 201
     else:
         return "", 404
 
 @app.route(URL + '/<id>', methods=["PUT"])
-def admParemeterCategory_update(id: int):
+def admParameterCategory_update(id: int):
     body = request.json
-    form: AdmParemeterCategoryForm = AdmParemeterCategoryForm(body)
-    admParemeterCategory = service.update(id, form)
-    if admParemeterCategory!=None:
-        return admParemeterCategory_schema.jsonify(admParemeterCategory), 200
+    form: AdmParameterCategoryForm = AdmParameterCategoryForm(body)
+    admParameterCategory = service.update(id, form)
+    if admParameterCategory!=None:
+        return admParameterCategory_schema.jsonify(admParameterCategory), 200
     else:
         return "", 404
 
 @app.route(URL + '/<id>', methods=["DELETE"])
-def admParemeterCategory_delete(id: int):
+def admParameterCategory_delete(id: int):
     bOk: bool = service.delete(id)
     if bOk:
         return "", 200

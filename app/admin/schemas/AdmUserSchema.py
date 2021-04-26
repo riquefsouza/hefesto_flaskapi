@@ -4,5 +4,5 @@ class AdmUserSchema(ma.Schema):
 	class Meta:
 		fields = ('id','active','email','login','name','password')
 
-adm_user_schema = AdmUserSchema()
-adm_users_schema = AdmUserSchema(many=True)
+admUser_schema = AdmUserSchema()
+admUser_schemaMany = AdmUserSchema(many=True)

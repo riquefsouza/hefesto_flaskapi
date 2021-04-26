@@ -23,4 +23,5 @@ ma = Marshmallow(app)
 #manager = Manager(app)
 #manager.add_command('db', MigrateCommand)
 
-from app.admin.controllers import AdmUserController
+from app.admin.controllers import AdmUserController, AdmMenuController, AdmPageController
+from app.admin.controllers import AdmProfileController, AdmParameterCategoryController, AdmParameterController

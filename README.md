@@ -25,6 +25,7 @@ pip install SQLAlchemy
 pip install flask-sqlalchemy
 pip install flask-marshmallow
 pip install marshmallow-sqlalchemy
+pip install passlib
 
 pip install -r requirements.txt
 

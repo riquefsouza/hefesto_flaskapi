@@ -51,4 +51,19 @@ def admProfile_delete(id: int):
     else:
         return "", 404
 
+@app.route(URL + '/<pageId>', methods=["GET"])
+def findProfilesByPage(pageId: int):
+    listAdmProfile = service.findProfilesByPage(pageId)
+    if listAdmProfile!=None:
+        return jsonify(listAdmProfile), 200
+    else:
+        return "", 404
+
+@app.route(URL + '/<userId>', methods=["GET"])
+def findProfilesByUser(userId: int):
+    listAdmProfile = service.findProfilesByUser(userId)
+    if listAdmProfile!=None:
+        return jsonify(listAdmProfile), 200
+    else:
+        return "", 404
 

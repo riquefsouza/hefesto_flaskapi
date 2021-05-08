@@ -1,6 +1,8 @@
 from app import db
 from app.admin.models.AdmMenu import AdmMenu
 from app.admin.schemas.AdmMenuForm import AdmMenuForm
+from typing import List
+
 
 class AdmMenuService:
     def __init__(self):
@@ -50,3 +52,7 @@ class AdmMenuService:
             print(e)
             db.session.rollback()
             return False
+    
+    def mountMenuItem(self, listIdProfile: List[int]):
+        pass
+

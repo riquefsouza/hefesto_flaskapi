@@ -4,6 +4,7 @@ from app.admin.schemas.AdmMenuSchema import admMenu_schema, admMenu_schemaMany
 from app.admin.schemas.AdmMenuForm import AdmMenuForm
 from app.admin.services.AdmMenuService import AdmMenuService
 from flask import request, jsonify
+from typing import List
 
 service = AdmMenuService()
 
@@ -51,4 +52,9 @@ def admMenu_delete(id: int):
     else:
         return "", 404
 
-
+@app.route(URL + '/mountMenu', methods=["GET"])
+def mountMenu():
+    body = request.json
+    listIdProfile = body
+    menuItemDTO = service.mountMenuItem(listIdProfile)
+    return jsonify(menuItemDTO), 200

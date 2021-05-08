@@ -26,7 +26,10 @@ pip install flask-sqlalchemy
 pip install flask-marshmallow
 pip install marshmallow-sqlalchemy
 pip install passlib
+pip install flask-cors
 
 pip install -r requirements.txt
 
 python run.py
+
+http://127.0.0.1:5000/swagger/index.html

@@ -1,11 +1,13 @@
 from flask import Flask
+from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 #from flask_script import Manager
 #from flask_migrate import Migrate, MigrateCommand
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='', static_folder='../public')
 app.config.from_object('config')
+CORS(app)
 
 # configure sqlite3 to enforce foreign key constraints
 #@event.listens_for(Engine, "connect")

@@ -12,14 +12,13 @@ URL = app.config['API_ROOT'] + '/admPage'
 @app.route(URL, methods=["GET"])
 def admPage_findAll():
     listaPages = service.findAll()
-    listaDTO = admPage_schemaMany.dump(listaPages)
-    return jsonify(listaDTO), 200
+    return listaPages, 200
 
 @app.route(URL + '/<id>', methods=["GET"])
 def admPage_findById(id: int):
     admPage = service.findById(id)
     if admPage!=None:
-        return admPage_schema.jsonify(admPage), 200
+        return admPage, 200
     else:
         return "", 404
 
@@ -29,7 +28,7 @@ def admPage_save():
     form: AdmPageForm = AdmPageForm(body)
     admPage = service.save(form)
     if admPage!=None:
-        return admPage_schema.jsonify(admPage), 201
+        return admPage, 201
     else:
         return "", 404
 
@@ -39,7 +38,7 @@ def admPage_update(id: int):
     form: AdmPageForm = AdmPageForm(body)
     admPage = service.update(id, form)
     if admPage!=None:
-        return admPage_schema.jsonify(admPage), 200
+        return admPage, 200
     else:
         return "", 404
 

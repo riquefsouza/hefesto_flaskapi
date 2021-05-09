@@ -52,6 +52,32 @@ class AdmMenuService:
             print(e)
             db.session.rollback()
             return False
+
+    def setTransientWithoutSubMenus(self, list: List[AdmMenu]):
+        for item in list:
+            self.setTransientSubMenus(item, None);
+
+    def setTransient(self, list: List[AdmMenu]):
+        for item in list:
+            self.setTransient(item)
+
+    def setTransientSubMenus(self, item: AdmMenu, subMenus: List[AdmMenu]):
+        if item.admPage != None:
+            item.url = item.admPage.url
+        else:
+            item.url = None
+        item.subMenus = subMenus
+    
+    def setTransient(self, item: AdmMenu):
+        self.setTransientSubMenus(item, self.findByIdMenuParent(item.id))
+
+    def findByIdMenuParent(self, idMenuParent: int):
+        if idMenuParent != None:
+            lista = AdmMenu.query.filter(AdmMenu.idMenuParent == idMenuParent)
+            #self.setTransientWithoutSubMenus(lista)
+            return lista
+        
+        return []
     
     def mountMenuItem(self, listIdProfile: List[int]):
         pass

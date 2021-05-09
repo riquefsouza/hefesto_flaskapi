@@ -8,10 +8,36 @@ class AdmPageProfileService:
     def __init__(self):
         pass
 
-    def setTransient(self, list: List[AdmPageProfile]):
-        for item in list:
-            setTransient(item)
+    #def setTransient(self, list: List[AdmPageProfile]):
+    #    for item in list:
+    #        setTransient(item)
     
-    def setTransient(self, item: AdmPageProfile):
-        item.AdmPage = AdmPage.query.filter(AdmPage.id == item.idPage).first()
-        item.AdmProfile = AdmProfile.query.filter(AdmProfile.id == item.idProfile).first()
+    #def setTransient(self, item: AdmPageProfile):
+    #    item.AdmPage = AdmPage.query.filter(AdmPage.id == item.idPage).first()
+    #    item.AdmProfile = AdmProfile.query.filter(AdmProfile.id == item.idProfile).first()
+
+    def findAll(self):
+        listAdmPageProfile = AdmPage.query.all()
+        #self.setTransient(listAdmPageProfile)
+        return listAdmPageProfile
+        
+    def getProfilesByPage(self, admPageId: int):
+        listAdmPageProfile = AdmPageProfile.query.filter_by(idPage = admPageId).all()
+        lista = []
+
+        for item in listAdmPageProfile:
+            #self.setTransient(item)
+            lista.append(item.admProfile)
+
+        return lista
+
+    def getPagesByProfile(self, admProfileId: int):
+        listAdmPageProfile = AdmPageProfile.query.filter_by(idProfile = admProfileId).all()
+        lista = []
+
+        for item in listAdmPageProfile:
+            #self.setTransient(item)
+            lista.append(item.admPage)
+
+        return lista
+

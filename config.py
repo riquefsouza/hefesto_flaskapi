@@ -7,6 +7,7 @@ DEBUG = True
 SQLALCHEMY_DATABASE_URI = "postgresql://postgres:abcd1234@localhost/dbhefesto"
 SQLALCHEMY_TRACK_MODIFICATIONS = True
 
-#SECRET_KEY = '2!c_*_b4jm719vm4-8w@q=pyf)kl05b#%t9ol@-pywu-gep$qi'
+JWT_SECRET_KEY = '2!c_*_b4jm719vm4-8w@q=pyf)kl05b#%t9ol@-pywu-gep$qi'
+JWT_ALGORITHM = "HS256"
 
 API_ROOT = "/api/v1"

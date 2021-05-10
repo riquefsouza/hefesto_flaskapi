@@ -1,3 +1,5 @@
+from typing import Dict
+
 class LoginForm:
     login: str
     password: str

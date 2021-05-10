@@ -1,9 +1,10 @@
 from app import app
-from admin.services.AdmUserService import AdmUserService
-from base.schemas.UserDTO import UserDTO
-from base.schemas.TokenDTO import TokenDTO
-from base.schemas.LoginForm import LoginForm
-from base.services.AuthHandlerService import AuthHandlerService
+from app.admin.services.AdmUserService import AdmUserService
+from app.base.schemas.UserDTO import UserDTO
+from app.base.schemas.TokenDTO import TokenDTO
+from app.base.schemas.LoginForm import LoginForm
+from app.base.services.AuthHandlerService import AuthHandlerService
+from flask import request, jsonify
 import jwt
 from datetime import datetime, timedelta
 
@@ -26,7 +27,7 @@ def login():
                 user.name = admUser.name
                 user.email = admUser.email
 
-                dto = authHandler.encode_token(user)                
+                dto = authHandler.encode_token(user)      
         
                 return dto.to_json(), 200
             else:

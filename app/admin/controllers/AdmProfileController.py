@@ -4,12 +4,14 @@ from app.admin.schemas.AdmProfileSchema import admProfile_schema, admProfile_sch
 from app.admin.schemas.AdmProfileForm import AdmProfileForm
 from app.admin.services.AdmProfileService import AdmProfileService
 from flask import request, jsonify
+from flask_jwt_extended import jwt_required
 
 service = AdmProfileService()
 
 URL = app.config['API_ROOT'] + '/admProfile'
 
 @app.route(URL, methods=["GET"])
+@jwt_required()
 def admProfile_findAll():
     listaProfiles = service.findAll()
     #listaDTO = admProfile_schemaMany.dump(listaProfiles)
@@ -17,6 +19,7 @@ def admProfile_findAll():
     return listaProfiles, 200
 
 @app.route(URL + '/<id>', methods=["GET"])
+@jwt_required()
 def admProfile_findById(id: int):
     admProfile = service.findById(id)
     if admProfile!=None:
@@ -26,6 +29,7 @@ def admProfile_findById(id: int):
         return "", 404
 
 @app.route(URL, methods=["POST"])
+@jwt_required()
 def admProfile_save():
     body = request.json
     form: AdmProfileForm = AdmProfileForm(body)
@@ -37,6 +41,7 @@ def admProfile_save():
         return "", 404
 
 @app.route(URL + '/<id>', methods=["PUT"])
+@jwt_required()
 def admProfile_update(id: int):
     body = request.json
     form: AdmProfileForm = AdmProfileForm(body)
@@ -48,6 +53,7 @@ def admProfile_update(id: int):
         return "", 404
 
 @app.route(URL + '/<id>', methods=["DELETE"])
+@jwt_required()
 def admProfile_delete(id: int):
     bOk: bool = service.delete(id)
     if bOk:
@@ -56,6 +62,7 @@ def admProfile_delete(id: int):
         return "", 404
 
 @app.route(URL + '/<pageId>', methods=["GET"])
+@jwt_required()
 def findProfilesByPage(pageId: int):
     listAdmProfile = service.findProfilesByPage(pageId)
     if listAdmProfile!=None:
@@ -64,6 +71,7 @@ def findProfilesByPage(pageId: int):
         return "", 404
 
 @app.route(URL + '/<userId>', methods=["GET"])
+@jwt_required()
 def findProfilesByUser(userId: int):
     listAdmProfile = service.findProfilesByUser(userId)
     if listAdmProfile!=None:

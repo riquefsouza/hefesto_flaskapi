@@ -5,12 +5,14 @@ from app.admin.schemas.AdmMenuForm import AdmMenuForm
 from app.admin.services.AdmMenuService import AdmMenuService
 from flask import request, jsonify
 from typing import List
+from flask_jwt_extended import jwt_required
 
 service = AdmMenuService()
 
 URL = app.config['API_ROOT'] + '/admMenu'
 
 @app.route(URL, methods=["GET"])
+@jwt_required()
 def admMenu_findAll():
     listaMenus = service.findAll()
     #listaDTO = admMenu_schemaMany.dump(listaMenus)
@@ -18,6 +20,7 @@ def admMenu_findAll():
     return listaMenus, 200
 
 @app.route(URL + '/<id>', methods=["GET"])
+@jwt_required()
 def admMenu_findById(id: int):
     admMenu = service.findById(id)
     if admMenu!=None:
@@ -27,6 +30,7 @@ def admMenu_findById(id: int):
         return "", 404
 
 @app.route(URL, methods=["POST"])
+@jwt_required()
 def admMenu_save():
     body = request.json
     form: AdmMenuForm = AdmMenuForm(body)
@@ -38,6 +42,7 @@ def admMenu_save():
         return "", 404
 
 @app.route(URL + '/<id>', methods=["PUT"])
+@jwt_required()
 def admMenu_update(id: int):
     body = request.json
     form: AdmMenuForm = AdmMenuForm(body)
@@ -49,6 +54,7 @@ def admMenu_update(id: int):
         return "", 404
 
 @app.route(URL + '/<id>', methods=["DELETE"])
+@jwt_required()
 def admMenu_delete(id: int):
     bOk: bool = service.delete(id)
     if bOk:
@@ -57,6 +63,7 @@ def admMenu_delete(id: int):
         return "", 404
 
 @app.route(URL + '/mountMenu', methods=["GET"])
+@jwt_required()
 def mountMenu():
     body = request.json
     listIdProfile = body

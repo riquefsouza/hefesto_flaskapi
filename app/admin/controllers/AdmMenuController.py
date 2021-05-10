@@ -61,4 +61,4 @@ def mountMenu():
     body = request.json
     listIdProfile = body
     menuItemDTO = service.mountMenuItem(listIdProfile)
-    return jsonify(menuItemDTO), 200
+    return menuItemDTO, 200

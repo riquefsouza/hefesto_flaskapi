@@ -12,14 +12,16 @@ URL = app.config['API_ROOT'] + '/admProfile'
 @app.route(URL, methods=["GET"])
 def admProfile_findAll():
     listaProfiles = service.findAll()
-    listaDTO = admProfile_schemaMany.dump(listaProfiles)
-    return jsonify(listaDTO), 200
+    #listaDTO = admProfile_schemaMany.dump(listaProfiles)
+    #return jsonify(listaDTO), 200
+    return listaProfiles, 200
 
 @app.route(URL + '/<id>', methods=["GET"])
 def admProfile_findById(id: int):
     admProfile = service.findById(id)
     if admProfile!=None:
-        return admProfile_schema.jsonify(admProfile), 200
+        #return admProfile_schema.jsonify(admProfile), 200
+        return admProfile, 200
     else:
         return "", 404
 
@@ -29,7 +31,8 @@ def admProfile_save():
     form: AdmProfileForm = AdmProfileForm(body)
     admProfile = service.save(form)
     if admProfile!=None:
-        return admProfile_schema.jsonify(admProfile), 201
+        #return admProfile_schema.jsonify(admProfile), 201
+        return admProfile, 201
     else:
         return "", 404
 
@@ -39,7 +42,8 @@ def admProfile_update(id: int):
     form: AdmProfileForm = AdmProfileForm(body)
     admProfile = service.update(id, form)
     if admProfile!=None:
-        return admProfile_schema.jsonify(admProfile), 200
+        #return admProfile_schema.jsonify(admProfile), 200
+        return admProfile, 200
     else:
         return "", 404
 

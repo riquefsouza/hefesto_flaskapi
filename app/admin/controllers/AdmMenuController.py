@@ -13,14 +13,16 @@ URL = app.config['API_ROOT'] + '/admMenu'
 @app.route(URL, methods=["GET"])
 def admMenu_findAll():
     listaMenus = service.findAll()
-    listaDTO = admMenu_schemaMany.dump(listaMenus)
-    return jsonify(listaDTO), 200
+    #listaDTO = admMenu_schemaMany.dump(listaMenus)
+    #return jsonify(listaDTO), 200
+    return listaMenus, 200
 
 @app.route(URL + '/<id>', methods=["GET"])
 def admMenu_findById(id: int):
     admMenu = service.findById(id)
     if admMenu!=None:
-        return admMenu_schema.jsonify(admMenu), 200
+        #return admMenu_schema.jsonify(admMenu), 200
+        return admMenu, 200
     else:
         return "", 404
 
@@ -30,7 +32,8 @@ def admMenu_save():
     form: AdmMenuForm = AdmMenuForm(body)
     admMenu = service.save(form)
     if admMenu!=None:
-        return admMenu_schema.jsonify(admMenu), 201
+        #return admMenu_schema.jsonify(admMenu), 201
+        return admMenu, 201
     else:
         return "", 404
 
@@ -40,7 +43,8 @@ def admMenu_update(id: int):
     form: AdmMenuForm = AdmMenuForm(body)
     admMenu = service.update(id, form)
     if admMenu!=None:
-        return admMenu_schema.jsonify(admMenu), 200
+        #return admMenu_schema.jsonify(admMenu), 200
+        return admMenu, 200
     else:
         return "", 404
 

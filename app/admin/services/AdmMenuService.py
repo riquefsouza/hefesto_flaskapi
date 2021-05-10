@@ -1,25 +1,29 @@
 from app import db
 from app.admin.models.AdmMenu import AdmMenu
 from app.admin.schemas.AdmMenuForm import AdmMenuForm
+from app.admin.schemas.AdmMenuDTO import AdmMenuDTO
 from typing import List
-
+from flask import jsonify
+import json
 
 class AdmMenuService:
     def __init__(self):
         pass
 
     def findAll(self):
-        return AdmMenu.query.all()
+        plist = AdmMenu.query.all()
+        return self.setTransientList(plist)
 
     def findById(self, id: int):
-        return AdmMenu.query.filter(AdmMenu.id == id).first()
+        obj = AdmMenu.query.filter(AdmMenu.id == id).first()
+        return self.setTransient(obj)
 
     def save(self, form: AdmMenuForm):
         try:
             admMenu = form.to_AdmMenu()
             db.session.add(admMenu)
             db.session.commit()
-            return admMenu
+            return self.setTransient(admMenu)
         except Exception as e:
             print(e)
             db.session.rollback()
@@ -31,7 +35,7 @@ class AdmMenuService:
             if admMenu != None:
                 admMenu = form.from_AdmMenu(admMenu)
                 db.session.commit()
-                return admMenu
+                return self.setTransient(admMenu)
             else:
                 return None
         except Exception as e:
@@ -53,32 +57,59 @@ class AdmMenuService:
             db.session.rollback()
             return False
 
-    def setTransientWithoutSubMenus(self, list: List[AdmMenu]):
-        for item in list:
-            self.setTransientSubMenus(item, None);
+    def setTransientWithoutSubMenus(self, plist: List[AdmMenuDTO]):
+        listaDTO = []
+        for item in plist:
+            dto = self.setTransientSubMenus(item, None)
+            listaDTO.append(dto)
+        return jsonify(listaDTO)
 
-    def setTransient(self, list: List[AdmMenu]):
-        for item in list:
-            self.setTransient(item)
+    def setTransientList(self, plist: List[AdmMenu]):
+        listaDTO = []
+        for item in plist:
+            dto = self.setTransient(item)
+            listaDTO.append(dto)
+        return jsonify(listaDTO)
 
-    def setTransientSubMenus(self, item: AdmMenu, subMenus: List[AdmMenu]):
+    def setTransientSubMenus(self, item: AdmMenu, subMenus: List[AdmMenuDTO]):
+        dto = AdmMenuDTO(item)
         if item.admPage != None:
-            item.url = item.admPage.url
+            dto.url = item.admPage.url
         else:
-            item.url = None
-        item.subMenus = subMenus
+            dto.url = None
+        dto.subMenus = subMenus
+
+        return dto.__dict__
     
     def setTransient(self, item: AdmMenu):
-        self.setTransientSubMenus(item, self.findByIdMenuParent(item.id))
+        listaMenus = self.findByIdMenuParent(item.id)
+        listaDTO = []
+        for menu in listaMenus:
+            menuDTO = AdmMenuDTO(menu)
+            listaDTO.append(menuDTO.__dict__)
+
+        return self.setTransientSubMenus(item, listaDTO)
 
     def findByIdMenuParent(self, idMenuParent: int):
         if idMenuParent != None:
-            lista = AdmMenu.query.filter(AdmMenu.idMenuParent == idMenuParent)
+            lista = AdmMenu.query.filter_by(idMenuParent = idMenuParent).all()
             #self.setTransientWithoutSubMenus(lista)
             return lista
         
         return []
     
+    def findMenuByIdProfiles(self, listaIdProfile: List[int], admMenu: AdmMenu):
+        pass
+
+    def findAdminMenuByIdProfiles(self, listaIdProfile: List[int], admMenu: AdmMenu):
+        pass
+
+    def findMenuParentByIdProfiles(self, listaIdProfile: List[int]):
+        pass
+    
+    def findAdminMenuParentByIdProfiles(self, listaIdProfile: List[int]):
+        pass
+
     def mountMenuItem(self, listIdProfile: List[int]):
         pass
 

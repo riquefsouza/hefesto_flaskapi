@@ -23,9 +23,9 @@ class AdmUserProfileService:
         
     def getProfilesByUser(self, admUserId: int):
         listAdmUserProfile = AdmUserProfile.query.filter(AdmUserProfile.idUser == admUserId)
-        lista: List[AdmProfile]
+        lista = []
 
-        for item in lista:
+        for item in listAdmUserProfile:
             #self.setTransient(item)
             lista.append(item.admProfile)
 
@@ -33,9 +33,9 @@ class AdmUserProfileService:
 
     def getUsersByProfile(self, admProfileId: int):
         listAdmUserProfile = AdmUserProfile.query.filter(AdmUserProfile.idProfile == admProfileId)
-        lista: List[AdmUser]
+        lista = []
 
-        for item in lista:
+        for item in listAdmUserProfile:
             #self.setTransient(item)
             lista.append(item.admUser)
 

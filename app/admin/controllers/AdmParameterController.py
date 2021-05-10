@@ -12,14 +12,16 @@ URL = app.config['API_ROOT'] + '/admParameter'
 @app.route(URL, methods=["GET"])
 def admParameter_findAll():
     listaParameters = service.findAll()
-    listaDTO = admParameter_schemaMany.dump(listaParameters)
-    return jsonify(listaDTO), 200
+    #listaDTO = admParameter_schemaMany.dump(listaParameters)
+    #return jsonify(listaDTO), 200
+    return listaParameters, 200
 
 @app.route(URL + '/<id>', methods=["GET"])
 def admParameter_findById(id: int):
     admParameter = service.findById(id)
     if admParameter!=None:
-        return admParameter_schema.jsonify(admParameter), 200
+        #return admParameter_schema.jsonify(admParameter), 200
+        return admParameter, 200
     else:
         return "", 404
 
@@ -29,7 +31,8 @@ def admParameter_save():
     form: AdmParameterForm = AdmParameterForm(body)
     admParameter = service.save(form)
     if admParameter!=None:
-        return admParameter_schema.jsonify(admParameter), 201
+        #return admParameter_schema.jsonify(admParameter), 201
+        return admParameter, 201
     else:
         return "", 404
 
@@ -39,7 +42,8 @@ def admParameter_update(id: int):
     form: AdmParameterForm = AdmParameterForm(body)
     admParameter = service.update(id, form)
     if admParameter!=None:
-        return admParameter_schema.jsonify(admParameter), 200
+        #return admParameter_schema.jsonify(admParameter), 200
+        return admParameter, 200
     else:
         return "", 404
 

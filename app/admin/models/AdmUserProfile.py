@@ -1,7 +1,7 @@
 from app import db
 
 
-class AdmUserProfile(Base):
+class AdmUserProfile(db.Model):
     __tablename__ = 'adm_user_profile'
 
     id = db.Column('usp_seq', db.BigInteger, db.Sequence('adm_user_profile_seq'), primary_key=True)

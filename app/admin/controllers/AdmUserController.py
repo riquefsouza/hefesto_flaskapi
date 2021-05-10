@@ -12,18 +12,14 @@ URL = app.config['API_ROOT'] + '/admUser'
 @app.route(URL, methods=["GET"])
 def admUser_findAll():
     listaUsers = service.findAll()
-    #listaDTO = AdmUserDTO.list_to_json(listaUsers)
-    listaDTO = admUser_schemaMany.dump(listaUsers)
-    #return listaDTO, 200
-    return jsonify(listaDTO), 200
+    return listaUsers, 200
 
 @app.route(URL + '/<id>', methods=["GET"])
 def admUser_findById(id: int):
     admUser = service.findById(id)
     if admUser!=None:
-        #dto = AdmUserDTO(admUser)
-        #return dto.to_json(), 200
-        return admUser_schema.jsonify(admUser), 200
+        #return admUser_schema.jsonify(admUser), 200
+        return admUser, 200
     else:
         return "", 404
 
@@ -35,9 +31,8 @@ def admUser_save():
     form: AdmUserForm = AdmUserForm(body)
     admUser = service.save(form)
     if admUser!=None:
-        #dto = AdmUserDTO(admUser)
-        #return dto.to_json(), 201
-        return admUser_schema.jsonify(admUser), 201
+        #return admUser_schema.jsonify(admUser), 201
+        return admUser, 201
     else:
         return "", 404
 
@@ -47,9 +42,8 @@ def admUser_update(id: int):
     form: AdmUserForm = AdmUserForm(body)
     admUser = service.update(id, form)
     if admUser!=None:
-        #dto = AdmUserDTO(admUser)
-        #return dto.to_json(), 200
-        return admUser_schema.jsonify(admUser), 200
+        #return admUser_schema.jsonify(admUser), 200
+        return admUser, 200
     else:
         return "", 404
 
